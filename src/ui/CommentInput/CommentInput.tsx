@@ -4,11 +4,13 @@ import styles from "./CommentInput.module.css";
 
 interface CommentInputProps {
   open: boolean;
+  x: number;
+  y: number;
   onSubmit: (text: string) => void;
   onCancel: () => void;
 }
 
-export default function CommentInput({ open, onSubmit, onCancel }: CommentInputProps) {
+export default function CommentInput({ open, x, y, onSubmit, onCancel }: CommentInputProps) {
   const [text, setText] = useState("");
 
   function handleSubmit() {
@@ -23,26 +25,26 @@ export default function CommentInput({ open, onSubmit, onCancel }: CommentInputP
     onCancel();
   }
 
+  const left = x > 55 ? `${x - 58}%` : `${x + 3}%`;
+  const top = y > 60 ? `${y - 42}%` : `${y + 5}%`;
+
   return (
     <AnimatePresence>
       {open && (
         <>
-          <motion.div
+          <div
             className={styles.backdrop}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
             onClick={(e) => { e.stopPropagation(); handleCancel(); }}
           />
           <motion.div
-            className={styles.modal}
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+            className={styles.popover}
+            style={{ left, top }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.15 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <span className={styles.title}>Leave a comment</span>
             <textarea
               className={styles.textarea}
               placeholder="What do you notice here?"

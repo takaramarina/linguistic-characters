@@ -2,6 +2,7 @@ import {
   collection,
   addDoc,
   deleteDoc,
+  updateDoc,
   doc,
   query,
   where,
@@ -30,6 +31,14 @@ export async function saveComment(
 
 export async function deleteComment(commentId: string): Promise<void> {
   await deleteDoc(doc(db, "comments", commentId));
+}
+
+export async function updateCommentPosition(
+  commentId: string,
+  x: number,
+  y: number
+): Promise<void> {
+  await updateDoc(doc(db, "comments", commentId), { x, y });
 }
 
 export function subscribeToComments(

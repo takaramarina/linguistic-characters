@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import type { PanelData } from "../../data/panels";
 import type { Comment } from "../../data/comments";
-import { subscribeToComments, saveComment, deleteComment } from "../../data/comments";
+import { subscribeToComments, saveComment, deleteComment, updateCommentPosition } from "../../data/comments";
 import Pin from "../Pin/Pin";
 import StickyNote from "../StickyNote/StickyNote";
 import CommentPin from "../CommentPin/CommentPin";
@@ -75,6 +75,10 @@ export default function Panel({ data, detailMode, commentMode }: PanelProps) {
     setActiveCommentId(null);
   }, []);
 
+  const handleCommentDragEnd = useCallback((commentId: string, x: number, y: number) => {
+    updateCommentPosition(commentId, x, y);
+  }, []);
+
   const handleCommentSubmit = useCallback(
     (text: string) => {
       if (!pendingCoords) return;
@@ -118,7 +122,7 @@ export default function Panel({ data, detailMode, commentMode }: PanelProps) {
       {/* Comment pins */}
       {commentMode &&
         comments.map((c) => (
-          <CommentPin key={c.id} comment={c} onTap={handleCommentPinTap} />
+          <CommentPin key={`${c.id}-${c.x}-${c.y}`} comment={c} onTap={handleCommentPinTap} onDragEnd={handleCommentDragEnd} />
         ))}
 
       {commentMode && (
@@ -131,6 +135,8 @@ export default function Panel({ data, detailMode, commentMode }: PanelProps) {
 
       <CommentInput
         open={!!pendingCoords}
+        x={pendingCoords?.x ?? 0}
+        y={pendingCoords?.y ?? 0}
         onSubmit={handleCommentSubmit}
         onCancel={handleCommentCancel}
       />
