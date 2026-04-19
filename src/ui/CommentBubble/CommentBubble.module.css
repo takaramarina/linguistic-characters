@@ -1,0 +1,47 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+}
+
+.bubble {
+  position: absolute;
+  z-index: 31;
+  width: 220px;
+  padding: 12px 14px;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 200, 80, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.text {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #ddd;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.time {
+  font-size: 0.65rem;
+  color: #777;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.deleteBtn {
+  font-size: 0.65rem;
+  color: #a55;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}

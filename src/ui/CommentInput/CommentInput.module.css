@@ -1,0 +1,81 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  position: fixed;
+  z-index: 41;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1a1a1a;
+  border-radius: 14px 14px 0 0;
+  padding: 20px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #eee;
+  background: #2a2a2a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: rgba(255, 200, 80, 0.5);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.cancelBtn,
+.submitBtn {
+  padding: 6px 16px;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+}
+
+.cancelBtn {
+  color: #999;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submitBtn {
+  color: #1a1a1a;
+  background: rgba(255, 200, 80, 0.9);
+  font-weight: 600;
+}
+
+.submitBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
