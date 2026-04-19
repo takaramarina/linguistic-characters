@@ -46,8 +46,8 @@
 
 .commentToggleActive {
   color: #1a1a1a;
-  background: rgba(255, 200, 80, 0.85);
-  border-color: rgba(255, 200, 80, 0.85);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.85);
 }
 
 .carousel {
