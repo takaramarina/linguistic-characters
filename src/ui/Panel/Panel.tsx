@@ -11,11 +11,11 @@ import styles from "./Panel.module.css";
 
 interface PanelProps {
   data: PanelData;
+  detailMode: boolean;
   commentMode: boolean;
 }
 
-export default function Panel({ data, commentMode }: PanelProps) {
-  const [pinsVisible, setPinsVisible] = useState(false);
+export default function Panel({ data, detailMode, commentMode }: PanelProps) {
   const [activePinId, setActivePinId] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -32,20 +32,10 @@ export default function Panel({ data, commentMode }: PanelProps) {
     return () => unsubscribe();
   }, [commentMode, data.id]);
 
-  // Clear detail pins on outside click (existing behavior)
+  // Clear active pin when leaving detail mode
   useEffect(() => {
-    if (!pinsVisible) return;
-
-    function handleClickOutside(e: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        setActivePinId(null);
-        setPinsVisible(false);
-      }
-    }
-
-    document.addEventListener("pointerdown", handleClickOutside);
-    return () => document.removeEventListener("pointerdown", handleClickOutside);
-  }, [pinsVisible]);
+    if (!detailMode) setActivePinId(null);
+  }, [detailMode]);
 
   const handlePanelTap = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -59,16 +49,12 @@ export default function Panel({ data, commentMode }: PanelProps) {
         return;
       }
 
-      // Detail pin logic
+      // Detail pin logic — close active note on tap
       if (activePinId) {
         setActivePinId(null);
-        return;
-      }
-      if (!pinsVisible) {
-        setPinsVisible(true);
       }
     },
-    [commentMode, activePinId, pinsVisible]
+    [commentMode, activePinId]
   );
 
   const handlePinTap = useCallback((pinId: string) => {
@@ -122,13 +108,12 @@ export default function Panel({ data, commentMode }: PanelProps) {
       />
 
       {/* Detail pins */}
-      {!commentMode &&
-        pinsVisible &&
+      {detailMode &&
         data.pins.map((pin) => (
           <Pin key={pin.id} pin={pin} onTap={handlePinTap} />
         ))}
 
-      {!commentMode && <StickyNote pin={activePin} onClose={handleCloseNote} />}
+      {detailMode && <StickyNote pin={activePin} onClose={handleCloseNote} />}
 
       {/* Comment pins */}
       {commentMode &&

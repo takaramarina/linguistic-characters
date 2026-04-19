@@ -8,7 +8,18 @@ interface CarouselViewProps {
 }
 
 export default function CarouselView({ onBack }: CarouselViewProps) {
+  const [detailMode, setDetailMode] = useState(false);
   const [commentMode, setCommentMode] = useState(false);
+
+  function handleDetailToggle() {
+    setDetailMode((prev) => !prev);
+    if (commentMode) setCommentMode(false);
+  }
+
+  function handleCommentToggle() {
+    setCommentMode((prev) => !prev);
+    if (detailMode) setDetailMode(false);
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -17,16 +28,23 @@ export default function CarouselView({ onBack }: CarouselViewProps) {
           ← Overview
         </button>
         <button
-          className={`${styles.commentToggle} ${commentMode ? styles.commentToggleActive : ""}`}
-          onClick={() => setCommentMode((prev) => !prev)}
+          className={`${styles.toggle} ${detailMode ? styles.detailToggleActive : ""}`}
+          onClick={handleDetailToggle}
+          aria-label="Toggle details"
+        >
+          Details
+        </button>
+        <button
+          className={`${styles.toggle} ${commentMode ? styles.commentToggleActive : ""}`}
+          onClick={handleCommentToggle}
           aria-label="Toggle comments"
         >
-          {commentMode ? "Viewing comments" : "Comments"}
+          Comments
         </button>
       </div>
       <div className={styles.carousel}>
         {panels.map((panel) => (
-          <Panel key={panel.id} data={panel} commentMode={commentMode} />
+          <Panel key={panel.id} data={panel} detailMode={detailMode} commentMode={commentMode} />
         ))}
       </div>
     </div>
