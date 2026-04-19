@@ -27,13 +27,13 @@ export default function CarouselView({ onBack }: CarouselViewProps) {
         <button className={styles.backBtn} onClick={onBack} aria-label="Back to overview">
           ← Overview
         </button>
-        <button
+        {/* <button
           className={`${styles.toggle} ${detailMode ? styles.detailToggleActive : ""}`}
           onClick={handleDetailToggle}
           aria-label="Toggle details"
         >
           Details
-        </button>
+        </button> */}
         <button
           className={`${styles.toggle} ${commentMode ? styles.commentToggleActive : ""}`}
           onClick={handleCommentToggle}
