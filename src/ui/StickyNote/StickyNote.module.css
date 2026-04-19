@@ -1,0 +1,68 @@
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 51;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: #ccc;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  padding: 48px 20px 24px;
+  overflow-y: auto;
+  gap: 20px;
+}
+
+.image {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.text {
+  width: 100%;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin: 0 0 8px;
+}
+
+.note {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #ddd;
+  margin: 0;
+}

@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.backBtn {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin: 12px 0 0 16px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: #777;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  gap: 12px;
+  padding: 8px 6vw 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
