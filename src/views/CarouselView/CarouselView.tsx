@@ -8,17 +8,10 @@ interface CarouselViewProps {
 }
 
 export default function CarouselView({ onBack }: CarouselViewProps) {
-  const [detailMode, setDetailMode] = useState(false);
   const [commentMode, setCommentMode] = useState(false);
-
-  function handleDetailToggle() {
-    setDetailMode((prev) => !prev);
-    if (commentMode) setCommentMode(false);
-  }
 
   function handleCommentToggle() {
     setCommentMode((prev) => !prev);
-    if (detailMode) setDetailMode(false);
   }
 
   return (
