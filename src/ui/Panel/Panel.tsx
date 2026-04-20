@@ -2,8 +2,6 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import type { PanelData } from "../../data/panels";
 import type { Comment } from "../../data/comments";
 import { subscribeToComments, saveComment, deleteComment, updateCommentPosition } from "../../data/comments";
-import Pin from "../Pin/Pin";
-import StickyNote from "../StickyNote/StickyNote";
 import CommentPin from "../CommentPin/CommentPin";
 import CommentBubble from "../CommentBubble/CommentBubble";
 import CommentInput from "../CommentInput/CommentInput";
@@ -11,12 +9,10 @@ import styles from "./Panel.module.css";
 
 interface PanelProps {
   data: PanelData;
-  detailMode: boolean;
   commentMode: boolean;
 }
 
-export default function Panel({ data, detailMode, commentMode }: PanelProps) {
-  const [activePinId, setActivePinId] = useState<string | null>(null);
+export default function Panel({ data, commentMode }: PanelProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Comment state
@@ -32,11 +28,6 @@ export default function Panel({ data, detailMode, commentMode }: PanelProps) {
     return () => unsubscribe();
   }, [commentMode, data.id]);
 
-  // Clear active pin when leaving detail mode
-  useEffect(() => {
-    if (!detailMode) setActivePinId(null);
-  }, [detailMode]);
-
   const handlePanelTap = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (commentMode) {
@@ -48,22 +39,9 @@ export default function Panel({ data, detailMode, commentMode }: PanelProps) {
         setPendingCoords({ x, y });
         return;
       }
-
-      // Detail pin logic — close active note on tap
-      if (activePinId) {
-        setActivePinId(null);
-      }
     },
-    [commentMode, activePinId]
+    [commentMode]
   );
-
-  const handlePinTap = useCallback((pinId: string) => {
-    setActivePinId((prev) => (prev === pinId ? null : pinId));
-  }, []);
-
-  const handleCloseNote = useCallback(() => {
-    setActivePinId(null);
-  }, []);
 
   // Comment handlers
   const handleCommentPinTap = useCallback((commentId: string) => {
@@ -98,7 +76,6 @@ export default function Panel({ data, detailMode, commentMode }: PanelProps) {
     setPendingCoords(null);
   }, []);
 
-  const activePin = data.pins.find((p) => p.id === activePinId) ?? null;
   const activeComment = comments.find((c) => c.id === activeCommentId) ?? null;
 
   return (
@@ -110,14 +87,6 @@ export default function Panel({ data, detailMode, commentMode }: PanelProps) {
         loading="lazy"
         draggable={false}
       />
-
-      {/* Detail pins */}
-      {detailMode &&
-        data.pins.map((pin) => (
-          <Pin key={pin.id} pin={pin} onTap={handlePinTap} />
-        ))}
-
-      {detailMode && <StickyNote pin={activePin} onClose={handleCloseNote} />}
 
       {/* Comment pins */}
       {commentMode &&
